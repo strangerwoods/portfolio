@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   SiExpress,
   SiHtml5,
@@ -12,8 +12,28 @@ import {
 } from "react-icons/si";
 import { FaCss3Alt, FaLinkedin, FaGithub, FaLink } from "react-icons/fa";
 import { MdEmail, MdPhone, MdLocationOn } from "react-icons/md";
+import { FiSun, FiMoon } from "react-icons/fi";
 
 function App() {
+  const [isDark, setIsDark] = useState(() => {
+    const stored = localStorage.getItem("theme");
+    return stored ? stored === "dark" : true;
+  });
+
+  useEffect(() => {
+    const html = document.documentElement;
+    if (isDark) {
+      html.classList.add("dark");
+      html.classList.remove("light");
+      localStorage.setItem("theme", "dark");
+    } else {
+      html.classList.add("light");
+      html.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  }, [isDark]);
+
+  const toggleTheme = () => setIsDark((prev) => !prev);
   const resume = {
     name: "Alessandro Calianu",
     title: "Full Stack Web Developer",
@@ -92,23 +112,31 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-slate-950 via-slate-900 to-slate-950">
+    <div className="min-h-screen bg-linear-to-b from-slate-50 via-white to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
       <div className="flex h-screen overflow-hidden">
         {/* Sidebar */}
-        <div className="w-80 bg-slate-900 border-r border-slate-700 overflow-y-auto shadow-2xl">
+        <div className="w-80 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-700 overflow-y-auto shadow-2xl">
           {/* Header */}
-          <div className="flex items-center justify-between p-6 border-b border-slate-700 sticky top-0 bg-slate-900 z-10">
+          <div className="flex items-center justify-between p-6 border-b border-slate-200 dark:border-slate-700 sticky top-0 bg-white dark:bg-slate-900 z-10">
             <div className="flex gap-1">
               <div className="terminal-dot red"></div>
               <div className="terminal-dot yellow"></div>
               <div className="terminal-dot green"></div>
             </div>
+            <button
+              type="button"
+              onClick={toggleTheme}
+              className="p-2 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-600 dark:text-slate-300 cursor-pointer"
+              aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+            >
+              {isDark ? <FiSun className="text-lg" /> : <FiMoon className="text-lg" />}
+            </button>
           </div>
 
           {/* Profile Info */}
           <div className="p-6">
-            <h1 className="text-3xl font-bold text-blue-400 mb-1">{resume.name}</h1>
-            <p className="text-sm text-emerald-400 mb-4 font-medium">
+            <h1 className="text-3xl font-bold text-blue-500 dark:text-blue-400 mb-1">{resume.name}</h1>
+            <p className="text-sm text-emerald-600 dark:text-emerald-400 mb-4 font-medium">
               $ {resume.title}
             </p>
 
@@ -116,19 +144,19 @@ function App() {
             <div className="space-y-3 mb-6">
               <a
                 href={`mailto:${resume.email}`}
-                className="flex items-center gap-2 text-slate-300 hover:text-blue-400 transition-colors text-sm"
+                className="flex items-center gap-2 text-slate-700 dark:text-slate-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors text-sm"
               >
                 <MdEmail className="shrink-0" />
                 <span className="truncate">{resume.email}</span>
               </a>
               <a
                 href={`tel:${resume.phone}`}
-                className="flex items-center gap-2 text-slate-300 hover:text-blue-400 transition-colors text-sm"
+                className="flex items-center gap-2 text-slate-700 dark:text-slate-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors text-sm"
               >
                 <MdPhone className="shrink-0" />
                 <span>{resume.phone}</span>
               </a>
-              <div className="flex items-center gap-2 text-slate-300 text-sm">
+              <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300 text-sm">
                 <MdLocationOn className="shrink-0" />
                 <span>{resume.location}</span>
               </div>
@@ -140,7 +168,7 @@ function App() {
                 href={resume.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 hover:bg-slate-800 rounded-lg transition-colors text-blue-400 hover:text-blue-300"
+                className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300"
               >
                 <FaLinkedin />
               </a>
@@ -148,7 +176,7 @@ function App() {
                 href={resume.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 hover:bg-slate-800 rounded-lg transition-colors text-slate-300 hover:text-emerald-400"
+                className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors text-slate-700 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400"
               >
                 <FaGithub />
               </a>
@@ -156,28 +184,28 @@ function App() {
                 href={resume.github2}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 hover:bg-slate-800 rounded-lg transition-colors text-slate-300 hover:text-emerald-400"
+                className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors text-slate-700 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400"
               >
                 <FaGithub />
               </a>
             </div>
 
             {/* Summary */}
-            <div className="pt-6 border-t border-slate-700">
-              <p className="text-xs text-slate-300 leading-relaxed">
+            <div className="pt-6 border-t border-slate-200 dark:border-slate-700">
+              <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
                 {resume.summary}
               </p>
             </div>
 
             {/* Languages */}
             {resume.languages.length > 0 && (
-              <div className="mt-6 pt-6 border-t border-slate-700">
-                <h3 className="text-sm font-bold text-blue-400 mb-3">Lingue</h3>
+              <div className="mt-6 pt-6 border-t border-slate-200 dark:border-slate-700">
+                <h3 className="text-sm font-bold text-blue-500 dark:text-blue-400 mb-3">Lingue</h3>
                 <div className="space-y-2">
                   {resume.languages.map((lang, idx) => (
                     <div key={idx} className="text-xs">
-                      <p className="font-semibold text-emerald-400">{lang.name}</p>
-                      <p className="text-slate-400">
+                      <p className="font-semibold text-emerald-600 dark:text-emerald-400">{lang.name}</p>
+                      <p className="text-slate-500 dark:text-slate-400">
                         {lang.proficiency}
                       </p>
                     </div>
@@ -191,10 +219,10 @@ function App() {
         {/* Main Content */}
         <div className="flex-1 overflow-y-auto">
           {/* Skills Section */}
-          <section className="p-8 border-b border-slate-700">
-            <h2 className="text-2xl font-bold text-blue-400 mb-6 flex items-center gap-2">
-              <span className="text-emerald-400">[</span> Skills{" "}
-              <span className="text-emerald-400">]</span>
+          <section className="p-8 border-b border-slate-200 dark:border-slate-700">
+            <h2 className="text-2xl font-bold text-blue-500 dark:text-blue-400 mb-6 flex items-center gap-2">
+              <span className="text-emerald-600 dark:text-emerald-400">[</span> Skills{" "}
+              <span className="text-emerald-600 dark:text-emerald-400">]</span>
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
               {resume.skills.map((skill, idx) => {
@@ -202,7 +230,7 @@ function App() {
                 return (
                   <div
                     key={idx}
-                    className="bg-slate-800 border border-slate-700 rounded-lg p-3 hover:shadow-lg hover:shadow-blue-500/20 transition-all hover:-translate-y-1 cursor-pointer group"
+                    className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-3 hover:shadow-lg hover:shadow-blue-500/20 transition-all hover:-translate-y-1 cursor-pointer group"
                     style={{
                       borderColor: skill.color + "40",
                     }}
@@ -211,7 +239,7 @@ function App() {
                       className="text-2xl mx-auto mb-2 group-hover:scale-110 transition-transform"
                       style={{ color: skill.color }}
                     />
-                    <p className="text-xs font-semibold text-slate-300 text-center group-hover:text-blue-400">
+                    <p className="text-xs font-semibold text-slate-700 dark:text-slate-300 text-center group-hover:text-blue-500 dark:group-hover:text-blue-400">
                       {skill.name}
                     </p>
                   </div>
@@ -221,28 +249,28 @@ function App() {
           </section>
 
           {/* Education Section */}
-          <section className="p-8 border-b border-slate-700">
-            <h2 className="text-2xl font-bold text-blue-400 mb-6 flex items-center gap-2">
-              <span className="text-emerald-400">[</span> Educazione{" "}
-              <span className="text-emerald-400">]</span>
+          <section className="p-8 border-b border-slate-200 dark:border-slate-700">
+            <h2 className="text-2xl font-bold text-blue-500 dark:text-blue-400 mb-6 flex items-center gap-2">
+              <span className="text-emerald-600 dark:text-emerald-400">[</span> Educazione{" "}
+              <span className="text-emerald-600 dark:text-emerald-400">]</span>
             </h2>
             <div className="space-y-4">
               {resume.education.map((edu) => (
                 <div
                   key={edu.id}
-                  className="bg-slate-800 border-l-4 border-emerald-400 p-4 hover:bg-slate-700 transition-colors"
+                  className="bg-white dark:bg-slate-800 border-l-4 border-emerald-500 dark:border-emerald-400 p-4 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
                 >
-                  <p className="text-emerald-400 font-semibold text-sm mb-1">
+                  <p className="text-emerald-600 dark:text-emerald-400 font-semibold text-sm mb-1">
                     {edu.degree}
                   </p>
                   <div className="flex justify-between items-start mb-2 flex-wrap gap-2">
-                    <p className="text-blue-400 font-bold">{edu.school}</p>
-                    <p className="text-slate-400 text-sm">
+                    <p className="text-blue-500 dark:text-blue-400 font-bold">{edu.school}</p>
+                    <p className="text-slate-500 dark:text-slate-400 text-sm">
                       {edu.year}
                     </p>
                   </div>
                   {edu.description && (
-                    <p className="text-slate-300 text-sm leading-relaxed">
+                    <p className="text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
                       {edu.description}
                     </p>
                   )}
@@ -252,25 +280,25 @@ function App() {
           </section>
 
           {/* Projects Section */}
-          <section className="p-8 border-b border-slate-700">
-            <h2 className="text-2xl font-bold text-blue-400 mb-6 flex items-center gap-2">
-              <span className="text-emerald-400">[</span> Progetti{" "}
-              <span className="text-emerald-400">]</span>
+          <section className="p-8 border-b border-slate-200 dark:border-slate-700">
+            <h2 className="text-2xl font-bold text-blue-500 dark:text-blue-400 mb-6 flex items-center gap-2">
+              <span className="text-emerald-600 dark:text-emerald-400">[</span> Progetti{" "}
+              <span className="text-emerald-600 dark:text-emerald-400">]</span>
             </h2>
             <div className="space-y-4">
               {resume.projects.map((project) => (
                 <div
                   key={project.id}
-                  className="bg-slate-800 border-l-4 border-emerald-400 p-4 hover:border-blue-400 transition-colors group"
+                  className="bg-white dark:bg-slate-800 border-l-4 border-emerald-500 dark:border-emerald-400 p-4 hover:border-blue-500 dark:hover:border-blue-400 transition-colors group"
                 >
-                  <h3 className="text-lg font-bold text-blue-400 mb-2 group-hover:text-emerald-400 transition-colors">
+                  <h3 className="text-lg font-bold text-blue-500 dark:text-blue-400 mb-2 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
                     {project.title}
                   </h3>
-                  <p className="text-slate-300 text-sm leading-relaxed mb-3">
+                  <p className="text-slate-700 dark:text-slate-300 text-sm leading-relaxed mb-3">
                     {project.description}
                   </p>
                   <div className="flex justify-between items-center flex-wrap gap-2">
-                    <p className="text-xs text-slate-400 font-mono">
+                    <p className="text-xs text-slate-500 dark:text-slate-400 font-mono">
                       {project.tech}
                     </p>
                     {project.link && (
@@ -278,7 +306,7 @@ function App() {
                         href={project.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-xs text-emerald-400 hover:text-emerald-300 transition-colors"
+                        className="inline-flex items-center gap-1 text-xs text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors"
                       >
                         <FaLink className="text-xs" />
                         <span>Repository</span>
@@ -292,26 +320,26 @@ function App() {
 
           {/* Experience Section */}
           <section className="p-8">
-            <h2 className="text-2xl font-bold text-blue-400 mb-6 flex items-center gap-2">
-              <span className="text-emerald-400">[</span> Esperienza{" "}
-              <span className="text-emerald-400">]</span>
+            <h2 className="text-2xl font-bold text-blue-500 dark:text-blue-400 mb-6 flex items-center gap-2">
+              <span className="text-emerald-600 dark:text-emerald-400">[</span> Esperienza{" "}
+              <span className="text-emerald-600 dark:text-emerald-400">]</span>
             </h2>
             <div className="space-y-4">
               {resume.experience.map((exp) => (
                 <div
                   key={exp.id}
-                  className="bg-slate-800 border-l-4 border-emerald-400 p-4 hover:bg-slate-700 transition-colors"
+                  className="bg-white dark:bg-slate-800 border-l-4 border-emerald-500 dark:border-emerald-400 p-4 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
                 >
                   <div className="flex justify-between items-start mb-2 flex-wrap gap-2">
-                    <p className="text-blue-400 font-bold">{exp.company}</p>
-                    <p className="text-slate-400 text-sm">
+                    <p className="text-blue-500 dark:text-blue-400 font-bold">{exp.company}</p>
+                    <p className="text-slate-500 dark:text-slate-400 text-sm">
                       {exp.duration}
                     </p>
                   </div>
-                  <p className="text-emerald-400 font-semibold text-sm mb-2">
+                  <p className="text-emerald-600 dark:text-emerald-400 font-semibold text-sm mb-2">
                     {exp.position}
                   </p>
-                  <p className="text-slate-300 text-sm leading-relaxed">
+                  <p className="text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
                     {exp.description}
                   </p>
                 </div>
