@@ -1,16 +1,35 @@
-# React + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+# Alessandro Calianu — Portfolio
+ 
+Personal portfolio page built with React, Vite, and Tailwind CSS.
+ 
+## Stack
+ 
+- **React** — component structure and state
+- **Vite** — dev server and build
+- **Tailwind CSS** — utility-first styling
+- **Maple Mono** — monospace font (falls back to Space Mono)
+## Getting started
+ 
+```bash
+npm install
+npm run dev
+```
+ 
+## Build & deploy
+ 
+```bash
+npm run build      # outputs to /dist
+npm run deploy     # pushes to gh-pages branch (requires gh-pages package)
+```
+ 
+Live at: `https://fedstrial.github.io/<repo-name>/`
+ 
+## Structure
+ 
+```
+src/
+└── App.jsx   # single-page portfolio — all sections and data live here
+```
+ 
+All resume data (skills, projects, education, experience) is defined in the `resume` object at the top of `App.jsx`. Edit that to update the page.
+ 
