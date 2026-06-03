@@ -113,9 +113,9 @@ function App() {
 
   return (
     <div className="min-h-screen bg-linear-to-b from-slate-50 via-white to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
-      <div className="flex h-screen overflow-hidden">
+      <div className="flex flex-col lg:flex-row lg:h-screen lg:overflow-hidden">
         {/* Sidebar */}
-        <div className="w-80 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-700 overflow-y-auto shadow-2xl">
+        <div className="w-full lg:w-80 lg:overflow-y-auto bg-white dark:bg-slate-900 border-b lg:border-b-0 lg:border-r border-slate-200 dark:border-slate-700 shadow-2xl lg:shadow-2xl">
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b border-slate-200 dark:border-slate-700 sticky top-0 bg-white dark:bg-slate-900 z-10">
             <div className="flex gap-1">
@@ -217,7 +217,7 @@ function App() {
         </div>
 
         {/* Main Content */}
-        <div className="flex-1 overflow-y-auto">
+        <div className="w-full lg:flex-1 lg:overflow-y-auto">
           {/* Skills Section */}
           <section className="p-8 border-b border-slate-200 dark:border-slate-700">
             <h2 className="text-2xl font-bold text-blue-500 dark:text-blue-400 mb-6 flex items-center gap-2">
